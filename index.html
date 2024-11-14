@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Simple styling to get the layout you described */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            padding: 20px;
+            white-space: nowrap; /* Prevent wrapping */
+        }
+
+        .left-side {
+            display: inline-block;
+            width: 55%;
+            padding: 10px;
+            vertical-align: top; /* Align vertically */
+            white-space: wrap; /* Allow wrapping */
+        }
+
+        .right-side {
+            display: inline-block;
+            width: 40%;
+            padding: 10px;
+            vertical-align: top; /* Align vertically */
+            margin-left: 20px;
+        }
+
+       .small-text-input {
+            width: 50%;
+            height: 30px;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+       .medium-textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 20px;
+            margin-right: 20px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+       .large-textbox {
+            width: 100%;
+            height: 80vh;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-side">
+            <span>
+                <label for="cfg_prefix">Output File Prefix:</label>
+                <input type="text" id="cfg_prefix" name="cfg_prefix" value="labels"><br><br>
+                <!--
+                <label for="cfg_initials">Date:</label>
+                <input type="text" id="cfg_initials" name="cfg_initials" value="Doe"><br><br>
+                <label for="lname">Date:</label>
+                <input type="text" id="lname" name="lname" value="Doe"><br><br>
+                -->
+            </span>
+            <label for="script_box">
+                Columns:<br>
+                <ul>
+                    <li>Initials ("HL" etc.)</li>
+                    <li>Date ("11-20-24" etc.)</li>
+                    <li>Test Group (UM, DM, etc.)</li>
+                    <li>Subject ID</li>
+                    <li>Sample ID</li>
+                    <li>Sample Type</li>
+                </ul>
+                Expansion Rules:<br>
+                <ul>
+                    <li>ranges "num1..num2" -- expands into the range [num1, num1+1, ..., num2] (inclusive)</li>
+                    <li>hyphens "-" -- merges together its sub-groups</li>
+                    <li>commas ","  -- concatenates independent sub-groups together</li>
+                    <li>ranges are higher precedence than hyphens which are higher precedence than commas:
+                    <ul>
+                        <li>so "A-1..5,B-6..9" is treated like "(A-(1..5)),(B-(6..9))"</li>
+                        <li>and its output would be "A-1 A-2 A-3 A-4 A-5 B-6 B-7 B-8 B-9"</li>
+                        <li>note: you cannot actually use parantheses to override the precedence rules</li>
+                    </ul>
+                </ul>
+                Script Box:<br>
+            </label><br>
+            <textarea id="script_box" class="medium-textarea"></textarea><br>
+            <button id="generateButton" onclick="parseScript()">Generate Combinations</button>
+            <button id="downloadButton" onclick="generateAllDocuments()">Download Documents</button>
+            <br>
+            <label for="console">Console:</label><br>
+            <textarea id="console" class="medium-textarea" readonly></textarea><br>
+            <label for="example">Example Script:</label><br>
+            <textarea id="example" class="medium-textarea" readonly>
+# Cornell
+NH 11-20-24 UM 207..218 01..06 Tibia
+NH 11-20-24 UM 207..218 01..10 Serum
+NH 11-20-24 UM 207..218 01..01 Cecum,LFemur,RFemur,Feces
+NH 11-20-24 CM 219..221 01..06 Tibia
+NH 11-20-24 CM 219..230 01..10 Serum
+NH 11-20-24 CM 219..230 01..01 Cecum,LFemur,RFemur,Feces
+
+NH 11-20-24 UM 231..235 01..01 EDL,TA,LFemur,RFemur
+NH 11-20-24 DM 236..243 01..01 EDL,TA,LFemur,RFemur
+NH 11-20-24 CF A-01..05 01..01 LFemur,RFemur
+            </textarea><br>
+        </div>
+        <div class="right-side">
+            <label for="raw_box">Output of Script Box (can be manually modified too):</label><br>
+            <textarea id="raw_box" class="large-textbox"></textarea>
+        </div>
+    </div>
+
+    <script src="zip.js"></script>
+    <script src="index.js"></script>
+    <script src="template.js/content_types.xml.js"></script>
+    <script src="template.js/docProps/app.xml.js"></script>
+    <script src="template.js/docProps/core.xml.js"></script>
+    <script src="template.js/docProps/custom.xml.js"></script>
+    <script src="template.js/_rels/dot_rels.js"></script>
+    <script src="template.js/word/document.xml.js"></script>
+    <script src="template.js/word/fontTable.xml.js"></script>
+    <script src="template.js/word/settings.xml.js"></script>
+    <script src="template.js/word/styles.xml.js"></script>
+    <script src="template.js/word/webSettings.xml.js"></script>
+    <script src="template.js/word/theme/theme1.xml.js"></script>
+    <script src="template.js/word/_rels/document.xml.rels.js"></script>
+</body>
+</html>
